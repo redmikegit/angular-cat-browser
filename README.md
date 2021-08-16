@@ -1,3 +1,5 @@
+This project connects to https://thecatapi.com/. Get your API for free!
+
 # View CatBrowser in action
 Demo link: http://mikeasuncion.ph/cat-browser
 
