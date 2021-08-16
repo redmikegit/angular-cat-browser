@@ -1,3 +1,8 @@
+This project connects to https://thecatapi.com/. Get your API for free!
+
+# View CatBrowser in action
+Demo link: http://mikeasuncion.ph/angular-cat-browser
+
 # CatBrowser
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.15.
