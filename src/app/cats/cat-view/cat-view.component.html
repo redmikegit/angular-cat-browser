@@ -1,0 +1,26 @@
+<div class="container cb-main-wrap cb-single-view">
+	<div class="row cb-header-wrap">
+	</div>
+	<div class="row cb-body-wrap">
+		<div class="col-12">
+			<h1>{{catData.name}} </h1>
+			<p> Origin: Greece</p>
+		</div>
+		<div class="col-12">
+
+			<img [@fadeInOnEnter] src="{{catImage}}" alt="" class=" ">
+			<p class="fw-bold">{{catData.temperament}}</p>
+			<p>{{catData.description}}</p>
+
+
+		</div>
+		<div class="col-12">
+			<button [@fadeInUpOnEnter] type="button" class="btn btn-primary" (click)="backToAllBreeds()">Back to all breeds</button>
+
+		</div>
+
+
+	</div>
+
+	<app-footer></app-footer>
+</div>

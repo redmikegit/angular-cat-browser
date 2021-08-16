@@ -1,0 +1,57 @@
+<div class="container cb-main-wrap">
+	<div class="row cb-header-wrap">
+	</div>
+	<div class="row cb-body-wrap">
+		<div class="col-12">
+			<h1>Cat Browser</h1>
+			<p> A simple cool way to check cat breeds around the world!</p>
+		</div>
+		<div class="col-12">
+			<div class="form-control border-0 bg-light">
+				<form [formGroup]="form" *ngIf="hasErrors == false">
+					<h3>Choose a breed</h3>
+					<select formControlName="breedName" required class="form-select"
+						(change)="onBreedChange(form.get('breedName').value)">
+						<option *ngIf="allBreeds" [value]="" selected>-choose-</option>
+						<option *ngFor="let breed of allBreeds " value="{{breed.id}}">{{breed.name}} </option>
+					</select>
+				</form>
+				<div class="cb-no-cats-found" *ngIf="hasErrors == true">
+					<img class="" src="../../../assets/sad-cat.png" alt="No cats found!">
+					<h3>Apologies butwe could not load new cats for you at this time! Miau!</h3>
+					<button class="btn btn-large btn-primary" (click)="retry()">Try Again</button>
+				</div>
+			</div>
+		</div>
+
+		<div [@fadeOutOnLeave] *ngIf="withImages" class="col-12 cb-chosen-breed-wrap">
+			<div class="card-group row row-cols-1 row-cols-md-4 row-cols-lg-6 justify-content-center">
+
+
+				<ng-container  *ngFor="let chunk of allImagesBreeds.chunks; let i = index"
+				 >
+
+					<div [@oneByOne]="allImagesBreeds.chunks.length" *ngFor="let img of chunk" class="col "  >
+						<div  class="card cb-stagger">
+							<img   src="{{img.url}}" class="card-img" alt="{{img.id}}">
+							<div class="card-footer ">
+								<button class="btn btn-md btn-primary" [routerLink]="['/cat-view/'+img.id]">View
+									Details</button>
+							</div>
+						</div>
+					</div>
+
+					<div *ngIf="toggleLoadMore" class="col cb-load-more-wrap">
+						<div *ngIf="i === allImagesBreeds.length - 1" (click)="loadMore( )" class="btn ">Load more</div>
+					</div>
+				</ng-container>
+
+			</div>
+
+
+		</div>
+	</div>
+
+	<app-footer></app-footer>
+
+</div>
