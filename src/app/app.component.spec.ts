@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'cat-browser'`, () => {
+  it(`should have as title 'angular-cat-browser'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('cat-browser');
+    expect(app.title).toEqual('angular-cat-browser');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('cat-browser app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('angular-cat-browser app is running!');
   });
 });

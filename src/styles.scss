@@ -1,4 +1,10 @@
- 
+/*
+* Author: MikeAsuncion
+* URL: http://mikeasuncion.ph/angular-cat-browser
+* Created: Aug. 15, 2021
+* Updated: Aug. 16, 2021
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Delius&family=Shadows+Into+Light+Two&display=swap');
 
 html,
@@ -15,7 +21,6 @@ h4,
 h5,
 h6 {
   font-family: 'Shadows Into Light Two', cursive;
-
 }
 
 html,
@@ -28,60 +33,57 @@ body {
 }
 
 .cb-main-wrap {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	height: 100%;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  text-align: center;
 
-	.cb-header-wrap {
-			margin-top: 50px;
-	}
+  .cb-header-wrap {
+    margin-top: 50px;
+  }
 
-	.cb-body-wrap {
-			flex: 1;
+  .cb-body-wrap {
+    flex: 1;
 
-			select {
-					width: auto;
-					margin: 0 auto;
-			}
+    select {
+      width: auto;
+      margin: 0 auto;
+    }
 
-			.cb-chosen-breed-wrap {
-					margin-top: 20px;
+    .cb-chosen-breed-wrap {
+      margin-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px dotted #ccc;
 
-					.col {
-							margin-bottom: 20px;
-					}
+      .col {
+        margin-bottom: 20px;
+      }
 
-					padding-bottom: 20px;
-					border-bottom: 2px dotted #ccc;
+      .cb-load-more-wrap {
+        background: #0d6efd7a;
+        padding: 0px;
+        border-radius: 5px;
 
-					.cb-load-more-wrap {
-							// border: 2px dotted rgb(235, 235, 235);
-							background: #0d6efd7a;
-							padding: 0px;
-							border-radius: 5px;
+        .btn {
+          height: 100%;
+          width: 100%;
+          place-content: center;
+          display: flex;
+          align-items: center;
+          margin: 0px;
+          padding: 0px;
 
-							.btn {
-									height: 100%;
-									width: 100%;
-									place-content: center;
-									display: flex;
-									align-items: center;
-									margin: 0px;
-									padding: 0px;
+          &:hover {
+            background: #0d6dfdd7;
+            color: white;
+          }
+        }
+      }
+    }
+  }
 
-									&:hover {
-											background: #0d6dfdd7;
-											color: white;
-									}
-							}
-					}
-			}
-	}
-
-	.cb-footer-wrap {
-			padding: 10px;
-	}
+  .cb-footer-wrap {
+    padding: 10px;
+  }
 }
-

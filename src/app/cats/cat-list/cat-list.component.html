@@ -1,6 +1,5 @@
 <div class="container cb-main-wrap">
-	<div class="row cb-header-wrap">
-	</div>
+	<div class="row cb-header-wrap"></div>
 	<div class="row cb-body-wrap">
 		<div class="col-12">
 			<h1>Cat Browser</h1>
@@ -23,35 +22,24 @@
 				</div>
 			</div>
 		</div>
-
 		<div [@fadeOutOnLeave] *ngIf="withImages" class="col-12 cb-chosen-breed-wrap">
 			<div class="card-group row row-cols-1 row-cols-md-4 row-cols-lg-6 justify-content-center">
-
-
-				<ng-container  *ngFor="let chunk of allImagesBreeds.chunks; let i = index"
-				 >
-
-					<div [@oneByOne]="allImagesBreeds.chunks.length" *ngFor="let img of chunk" class="col "  >
-						<div  class="card cb-stagger">
-							<img   src="{{img.url}}" class="card-img" alt="{{img.id}}">
+				<ng-container *ngFor="let chunk of allImagesBreeds.chunks; let i = index">
+					<div [@oneByOne]="allImagesBreeds.chunks.length" *ngFor="let img of chunk" class="col ">
+						<div class="card cb-stagger">
+							<img src="{{img.url}}" class="card-img" alt="{{img.id}}">
 							<div class="card-footer ">
 								<button class="btn btn-md btn-primary" [routerLink]="['/cat-view/'+img.id]">View
 									Details</button>
 							</div>
 						</div>
 					</div>
-
 					<div *ngIf="toggleLoadMore" class="col cb-load-more-wrap">
 						<div *ngIf="i === allImagesBreeds.length - 1" (click)="loadMore( )" class="btn ">Load more</div>
 					</div>
 				</ng-container>
-
 			</div>
-
-
 		</div>
 	</div>
-
 	<app-footer></app-footer>
-
 </div>

@@ -13,9 +13,10 @@ export class ApiService {
 		@Inject(HttpClient) http: HttpClient,
 		
 	) {
-		this._http = http;
+		this._http = http;  
 	}
 
+	//----- set the URL and API key from TheCatApi.com
 	baseUrl = 'https://api.thecatapi.com/v1/'
 	headerKey = 'X-API-KEY';
 	apiKey = 'eb730cce-3618-4cdc-b75c-b95de286c405';

@@ -1,7 +1,7 @@
 <div class="container cb-main-wrap cb-single-view">
 	<div class="row cb-header-wrap">
 	</div>
-	<div class="row cb-body-wrap">
+	<div *ngIf="hasErrors == false" class="row cb-body-wrap">
 		<div class="col-12">
 			<h1>{{catData.name}} </h1>
 			<p> Origin: Greece</p>
@@ -20,6 +20,15 @@
 		</div>
 
 
+	</div>
+
+	<div class="row cb-body-wrap" *ngIf="hasErrors == true">
+		<div class="col-12">
+			<img class="" src="../../../assets/sad-cat.png" alt="No cats found!">
+					<h3>Apologies butwe could not load the specific cat you requested. Miau!</h3>
+					<button class="btn btn-large btn-primary" (click)="retry()">Try Again</button>
+					<button class="btn btn-large btn-secondary m-2" (click)="backToAllBreeds()">Go Back Home</button>
+		</div>
 	</div>
 
 	<app-footer></app-footer>

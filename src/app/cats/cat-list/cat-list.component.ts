@@ -4,12 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChunkedData } from "src/app/shared/chunked.-data";
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {
-	fadeInDownOnEnterAnimation,
-	fadeInOnEnterAnimation,
-	fadeOutOnLeaveAnimation
-
-} from 'angular-animations';
+import { fadeOutOnLeaveAnimation } from 'angular-animations';
 import { oneByOne } from "src/app/shared/animations";
 
 @Component({
@@ -18,25 +13,30 @@ import { oneByOne } from "src/app/shared/animations";
 	styleUrls: ['./cat-list.component.scss'],
 	animations: [
 		fadeOutOnLeaveAnimation(),
-		fadeInDownOnEnterAnimation(),
-		fadeInOnEnterAnimation({ delay: 500, duration: 500, }),
 		oneByOne
 	]
 })
 export class CatListComponent implements OnInit {
 
 
-	public allBreeds: object;
-	// public allImagesBreeds: object;
-	public allImagesBreeds: ChunkedData<string> = new ChunkedData<string>();
+	public allBreeds: object; //----- used for assigning data
+	public allImagesBreeds: ChunkedData<string> = new ChunkedData<string>(); //used for loading more items
+	
+	//----- name of the formGroup. used for loading selected cat breeds
 	public form: FormGroup;
+
+	//----- get recently visited breed after viewing single item
+	public catBreedId = this.route.snapshot.paramMap.get('breedId');
+
+	//----- used for toggling elements
 	public withImages: boolean = false;
 	public toggleLoadMore: boolean = true;
-
-	public count = 2;
-	public limit = 10;
-	public catBreedId = this.route.snapshot.paramMap.get('breedId');
 	public hasErrors: boolean = false;
+
+	//-----set COUNT as initial page number for loading more items. 
+	public count = 2; //Start with 2 for page2 because page1 is already set on load
+	public limit = 10; //set item limit for loading
+
 
 	constructor(
 		private route: ActivatedRoute,
@@ -48,13 +48,11 @@ export class CatListComponent implements OnInit {
 		//----- get all cat breeds
 		this.catService.getAllBreeds().subscribe(
 			data => {
-				// console.log(data);
 				this.allBreeds = data;
 			},
 			error => {
 				// console.log(error);
-				// alert('Apologies butwe could not load new cats for you at this time! Miau!')
-				this.hasErrors = true;
+				this.hasErrors = true; //display error on front end
 			}
 		);
 
@@ -66,85 +64,88 @@ export class CatListComponent implements OnInit {
 
 		});
 
-		// console.log(this.catBreedId);
-
+		//-----get the last visited breed if there's any. 
 		if (this.catBreedId != null) {
-			this.onBreedChange(this.catBreedId);
-			this.form.controls['breedName'].setValue(this.catBreedId);
+			this.form.controls['breedName'].setValue(this.catBreedId); //Populate content by setting the selected value as default.
+			this.onBreedChange(this.catBreedId); //run the onBreedChange method to load the selected breed
 		}
 
 
 	} //constructor
 
 
-	retry(){
+	retry() {
 		window.location.reload();
 	}
 
 	onBreedChange(breedId) {
-		console.log(breedId);
+		// console.log(breedId);
 		this.toggleLoadMore = true;
 		localStorage.removeItem('lastLoaded');
 		localStorage.setItem('breed', breedId);
 
 		let pageNum = 1;
-		let pageLimit = 10;
+		let pageLimit = this.limit;
 
-
+		//----- show cat container  
 		if (breedId != '-choose-') {
 			this.location.replaceState(breedId);
 
 			//----- get list under specific breed
 			this.catService.getImagesOfBreeds(pageNum, pageLimit, breedId).subscribe(
 				data => {
-					this.allImagesBreeds.set(data);
-					// this.allImagesBreeds.push(data);
-					// this.allImagesBreeds = data;
-					localStorage.setItem('lastLoaded', data.length);
 
+					this.allImagesBreeds.set(data); //set initial content to the selected breed
+					localStorage.setItem('lastLoaded', data.length); //save the currently selected breed so we can use it for nagvigation
+
+					//----- show the cats container if there are items to display
 					if (this.allImagesBreeds) {
 						this.withImages = true;
 					}
 
+					//----- hide the load more button if the fetched data is less than the pageLimit
 					if (data.length < pageLimit) {
 						this.toggleLoadMore = false;
 					}
+				},
+				error => {
+ 					this.hasErrors = true; //display error on front end
 				}
 			);
 		}
+		//----- hide cats container if no selected value
 		else {
 			this.withImages = false;
-			this.location.replaceState('');
+			this.location.replaceState(''); //remove any saved URL state
 		}
 	}
 
 
 	loadMore() {
 		let breedId = localStorage.getItem('breed');
-		let pageNum = this.count++;
+		let pageNum = this.count++; //starting with #2 as the page number then increment
 		let pageLimit = this.limit;
-		let lastLoaded = localStorage.getItem('lastLoaded');
+		let lastLoaded = localStorage.getItem('lastLoaded'); //used to compare the last loaded items with the currently fetched items
 
 		//----- get list under specific breed
 		this.catService.getImagesOfBreeds(pageNum, pageLimit, breedId).subscribe(
 			data => {
 				this.allImagesBreeds.push(data);
-				// this.allImagesBreeds = data;
-
 				localStorage.setItem('lastLoaded', data.length);
 
-				if (data.length == pageLimit) {
+				//----- hide the load more button if no more items to display
+				if (data.length == lastLoaded) { 
 					this.toggleLoadMore = false;
 				}
-				console.log('lastLoaded: ' + lastLoaded, 'data.length: ' + data.length);
-
+				// console.log('lastLoaded: ' + lastLoaded, 'data.length: ' + data.length);
+			},
+			error => {
+				this.hasErrors = true; //display error on front end
 			}
 		);
 	}
 
 
-	ngOnInit(): void {
-
-	}
+	ngOnInit(): void { 	}
 
 }
